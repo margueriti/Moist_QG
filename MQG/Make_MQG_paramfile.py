@@ -1,7 +1,7 @@
 import xarray as xr
 import numpy as np
 
-ROOT = '/home/mlb542/Moist_QG/inputs/'
+ROOT = '/scratch/mlb542/MQG_output/inputs/'
 test = '0'
 ds = xr.Dataset()
 
