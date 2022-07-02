@@ -53,7 +53,7 @@ ds['Nsave'] = nstep*100#write-to-file frequency
 ds['precip_relaxation'] = 5*ds['dt'].values#precipitation relaxation timescale
 
 #naming the file
-ds['name']=name+'_L='+str(ds['Lx_int'].values)+'_dx='+str(ds['Nx'].values)+'_dt='+str(ds['dt'].values)+'_critinv='+str(beta)+'_LH='+str(LH)+'_CC='+str(CC)+'_E='+str(ds['evaporation'].values)+'_tau='+str(ds['precip_relaxation'].values)+'.nc'
+ds['name']=name+'_L='+str(ds['Lx_int'].values)+'_dx='+str(ds['Nx'].values)+'_dt='+str(ds['dt'].values)+'_critinv='+str(beta)+'_LH='+str(LH)+'_CC='+str(CC)+'_E='+str(ds['evaporation'].values)+'_tau='+str(ds['precip_relaxation'].values)
 
 #ds['dissipation_coeff'] = ds['dissipation_coeff'].values*((1-ds['latent_heating'].values)/(1+ds['latent_heating'].values*ds['CC'].values))**3
 
