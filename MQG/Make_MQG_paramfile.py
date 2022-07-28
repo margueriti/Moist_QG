@@ -6,7 +6,7 @@ test = '0'
 ds = xr.Dataset()
 
 #filetag
-name='MQG_sat'
+name='MQG_sat_sweep'
 
 #domain size parameters
 Lx_int=18
@@ -18,20 +18,20 @@ ds['Ly']=np.pi*Ly_int
 ds['Nx']=256
 ds['Ny']=256
 
-ds['nlayers'] = 2#the code is not set up to handle more than 2
+ds['nlayers'] = 2#the code is not set up to handle more than 2, but I can dream
 
 #coordinates
 ds.coords['layers']= [n for n in range(ds['nlayers'].values)]
 
 #dry parameters
 ds['damping'] = (['layers'],np.array([0.0,0.16]))#Ekman damping
-ds['beta'] = 0.8#inverse dry criticality
+ds['beta'] = 1.25#inverse dry criticality
 ds['RWN'] = (['layers'],np.array([1.0,1.0]))#inverse Rossby radius
 ds['mean_velocity'] = (['layers'],np.array([0.5,-0.5]))#vertical shear
 ds['dissipation_coeff'] = 10**(-7)#higher order numerical dissipation, currently set to del8
 
 #moist parameters
-ds['latent_heating'] = 0.5#moisture stratification
+ds['latent_heating'] = 0.7#moisture stratification
 ds['CC'] = 2.0#Clausius-Clayperon coefficient
 ds['moisture'] = (['layers'],np.array([False, True],dtype=bool))#which layers have moisture? from top to bottom
 ds['rain'] = True#is it raining? If no, moisture acts as a passive tracer
@@ -49,7 +49,7 @@ nstep = 2000
 ds['dt']=1.0/nstep#timestep size
 ds['Nstep'] = 400*nstep#total run length
 ds['Nout'] = nstep//10#output frequency
-ds['Nsave'] = nstep*100#write-to-file frequency
+ds['Nsave'] = nstep*200#write-to-file frequency
 ds['precip_relaxation'] = 5*ds['dt'].values#precipitation relaxation timescale
 
 #naming the file
