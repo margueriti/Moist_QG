@@ -31,18 +31,18 @@ ds['mean_velocity'] = (['layers'],np.array([0.5,-0.5]))#vertical shear
 ds['dissipation_coeff'] = 10**(-7)#higher order numerical dissipation, currently set to del8
 
 #moist parameters
-ds['latent_heating'] = 0.7#moisture stratification
+ds['LH'] = 0.7#moisture stratification
 ds['CC'] = 2.0#Clausius-Clayperon coefficient
 ds['moisture'] = (['layers'],np.array([False, True],dtype=bool))#which layers have moisture? from top to bottom
 ds['rain'] = True#is it raining? If no, moisture acts as a passive tracer
-ds['evaporation'] = 500.0#evaporation rate
+ds['evaporation'] = 1000.0#evaporation rate
 ds['init_moisture'] = -50.0#initial domain averaged value of moisture
 
 #checking consistency of moist parameters; if there is no moisture, then there can be no rain and latent heating, etc are removed
 if sum(ds['moisture'].values) ==0:
-	ds['rain'] = False
-	ds['latent_heating']=0.0
-	ds['CC']=0.0
+        ds['rain'] = False
+        ds['latent_heating']=0.0
+        ds['CC']=0.0
 
 #time parameters
 nstep = 2000
@@ -53,7 +53,7 @@ ds['Nsave'] = nstep*200#write-to-file frequency
 ds['precip_relaxation'] = 5*ds['dt'].values#precipitation relaxation timescale
 
 #naming the file
-ds['name']=name+'_L='+str(ds['Lx_int'].values)+'_dx='+str(ds['Nx'].values)+'_dt='+str(ds['dt'].values)+'_critinv='+str(beta)+'_LH='+str(LH)+'_CC='+str(CC)+'_E='+str(ds['evaporation'].values)+'_tau='+str(ds['precip_relaxation'].values)
+ds['name']=name+'_L='+str(Lx_int)+'_dx='+str(ds['Nx'].values)+'_dt='+str(ds['dt'].values)+'_critinv='+str(ds['beta'].values)+'_LH='+str(ds['LH'].values)+'_CC='+str(ds['CC'].values)+'_E='+str(ds['evaporation'].values)+'_tau='+str(ds['precip_relaxation'].values)
 
 #ds['dissipation_coeff'] = ds['dissipation_coeff'].values*((1-ds['latent_heating'].values)/(1+ds['latent_heating'].values*ds['CC'].values))**3
 
