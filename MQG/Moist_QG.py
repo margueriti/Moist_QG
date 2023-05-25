@@ -1,11 +1,3 @@
-"""
-Moist_QG
-
-author: Marguerite Brown
-email: mlb542@nyu.edu
-license: MIT. Please feel free to use and modify this, but keep the above information. Thanks!
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 import integratingfactors as intfact
@@ -93,9 +85,8 @@ class Moist_QG:
 
     def velocitymag_multilayer(self):
         self.velocity_multilayer()
-        u = np.fft.irfft2(self.var.u_hat)
-        v = np.fft.irfft2(self.var.v_hat)
-        self.var.u = np.sqrt(np.abs(u**2+v**2))
+        renorm = self.param.Nx*self.param.Ny
+        self.var.u = sum(np.sqrt(np.abs((self.var.u_hat[:,0,0]/renorm)**2+(self.var.v_hat[:,0,0]/renorm)**2)))
 
     def nonstiff_pv_tendency_multilayer(self):
         for i in self.param.moist_indices:
@@ -110,6 +101,8 @@ class Moist_QG:
         surplus_hat[0,0] = surplus_hat[0,0] + self.param.CC * self.var.water_content_hat[0,0,0]
         surplus = np.fft.irfft2(surplus_hat)
         self.var.precip = np.where(surplus>0.0,surplus,surplus*0.0)/self.param.tau
+        if self.param.latent_heating==0:
+            self.var.precip=0*self.var.precip
         self.var.precip_hat = np.fft.rfft2(self.var.precip)
         self.var.mean_precip = self.var.precip_hat[0,0]
         self.var.precip_hat[0,0]=0.0+0.0j
@@ -186,6 +179,7 @@ class Model_Variables:
         self.psi_hat = np.zeros((param.layers, param.Nl, param.Nk), dtype=complex)
         self.u_hat = np.zeros_like(self.psi_hat)
         self.v_hat = np.zeros_like(self.u_hat)
+        self.mean_precip=0.0
 
 class Model_Savedata:
     def __init__(self):
