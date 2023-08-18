@@ -2,7 +2,7 @@
 
 Performs a simulation of 2 layer quasigeostrophic flow with a precipitation term triggered by convective adjustment. Method is AB3 with an integrating factor. 
 
-To run: create a parameter file with Make_MQG_paramfile.py
+To run: edit and run Make_MQG_paramfile.py to make a parameter file
 
 Use this parameter file as an argument for Run_MQG_savedata_arg.py.
 
